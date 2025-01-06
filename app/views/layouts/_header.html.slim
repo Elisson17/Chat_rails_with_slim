@@ -1,0 +1,7 @@
+header
+  nav(class="flex flex-row justify-between items-center w-full h-16 bg-slate-800 shadow-right-bottom px-8")
+    = link_to "Chat Application", root_path, class: "text-white font-semibold"
+    - if user_signed_in?
+        = link_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "ml-4 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition gap-2 flex items-center" do 
+          i(class="fa-solid fa-arrow-right-from-bracket ")
+          | Sair

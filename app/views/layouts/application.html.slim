@@ -1,0 +1,15 @@
+doctype html
+html lang="pt-BR"
+  head
+    title
+      | Buggy
+    meta[name="viewport" content="width=device-width,initial-scale=1"]
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "tailwind", "inter-font", "application", "data-turbo-track": "reload"
+    = javascript_importmap_tags
+  body
+    main
+      - if user_signed_in?
+        = render "layouts/header"
+      = yield

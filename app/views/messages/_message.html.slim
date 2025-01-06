@@ -1,0 +1,4 @@
+div(class="flex items-start space-x-2 #{message.user_id === current_user.id ? 'justify-end' : ''}")
+    div(class="rounded-lg p-2 max-w-[70%] #{message.user_id === current_user.id ? 'bg-blue-500 text-white' : 'bg-gray-100'}")
+        p(class="text-sm") #{message.content}
+        p(class="text-xs items-start flex #{message.user_id === current_user.id ? 'text-blue-100 justify-end' : 'text-gray-500'} mt-1") #{message.created_at.strftime("%H:%M")}

@@ -1,0 +1,18 @@
+section(class="w-screen h-screen flex flex-col justify-center items-center bg-gradient-to-tr from-purple-700 to-indigo-500 backdrop-blur-md")
+  div(class="border-[1px] border-transparent rounded-lg flex flex-col justify-center items-center p-12 bg-slate-800 shadow-right-bottom w-full max-w-xl")
+    h2(class="text-white text-3xl font-semibold font-sans pb-4") Bem-vindo de volta!
+    - if flash[:alert]
+      .text-red-500.text-sm.font-semibold.p-2
+        = flash[:alert]
+    = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "flex flex-col gap-4 w-full" }) do |f|
+      .field
+      = f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "nome@exemplo.com", class: "rounded-md p-[6px] focus:outline-none focus:ring-0"
+      .field
+      = f.password_field :password, autocomplete: "current-password", placeholder: "Senha", class: "rounded-md p-[6px] focus:outline-none focus:ring-0"
+      - if devise_mapping.rememberable?
+        .field.gap-2.flex.flex-row
+          = f.check_box :remember_me
+          label(class="text-sm text-white") Lembrar de mim
+        = f.submit "Entrar", class: "rounded-md bg-blue-500 px-4 py-2 text-white font-semibold hover:cursor-pointer hover:bg-blue-600"
+    / Já mexo com isso
+    / = render "devise/shared/links"

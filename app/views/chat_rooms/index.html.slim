@@ -1,0 +1,11 @@
+section(class="flex w-full h-full")
+  = render "list", chats: @chat_rooms, selected_chat: @selected_chat
+  div(class="flex-grow")
+    - if @selected_chat
+      div(class="bg-gray-100 p-4 border-b")
+        - other_user = @selected_chat.users.where.not(id: @current_user.id).first
+        h1(class="text-black font-sans text-sm justify-end flex") #{@selected_chat.name || other_user.name }
+      = render "chat", chat: @selected_chat, current_user: @current_user
+    - else
+      div(class="bg-gray-100 p-4 border-b")
+        h1 Selecione um chat para começar a conversa
