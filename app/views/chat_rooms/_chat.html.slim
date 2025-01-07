@@ -1,20 +1,24 @@
 div(class="flex flex-col h-[calc(92vh-4rem)] border-l-[1px] border-black/20")
   div(class="flex-grow p-4 space-y-4 overflow-y-auto" id="chat" data-chat-room-id=chat.id data-user-id=current_user.id)
     - last_date = nil
-    - chat.messages.each do |message|
-      - current_date = message.created_at.to_date
-      - if current_date != last_date
-        - if current_date == Date.today
-          div(class="flex justify-center my-4")
-            span(class="bg-gray-100 text-gray-500 text-xs px-2 py-1 rounded-md") Hoje
-        - elsif current_date == Date.yesterday
-          div(class="flex justify-center my-4")
-            span(class="bg-gray-100 text-gray-500 text-xs px-2 py-1 rounded-md") Ontem
-        - else
-          div(class="flex justify-center my-4")
-            span(class="bg-gray-100 text-gray-500 text-xs px-2 py-1 rounded-md") #{current_date.strftime("%d/%m")}
-        - last_date = current_date
-      = render partial: "messages/message", locals: { message: message, current_user: current_user }
+    - if chat.messages.any?
+      - chat.messages.each do |message|
+        - current_date = message.created_at.to_date
+        - if current_date != last_date
+          - if current_date == Date.today
+            div(class="flex justify-center my-4")
+              span(class="bg-gray-100 text-gray-500 text-xs px-2 py-1 rounded-md") Hoje
+          - elsif current_date == Date.yesterday
+            div(class="flex justify-center my-4")
+              span(class="bg-gray-100 text-gray-500 text-xs px-2 py-1 rounded-md") Ontem
+          - else
+            div(class="flex justify-center my-4")
+              span(class="bg-gray-100 text-gray-500 text-xs px-2 py-1 rounded-md") #{current_date.strftime("%d/%m")}
+          - last_date = current_date
+        = render partial: "messages/message", locals: { message: message, current_user: current_user }
+    - else
+      div(class="flex justify-center my-4")
+        span(class="bg-gray-100 text-gray-500 text-xs px-2 py-1 rounded-md") Nenhuma mensagem
   div(class="p-4 border-t-[1px] border-black/15")
     = form_with(model: Message.new, url: chat_room_messages_path(chat), method: :post, local: true, class: "flex flex-row space-x-2", id: "message-form") do |f|
       = f.text_field :content, placeholder: "Escreva uma mensagem...", class: "w-full rounded-lg p-2 border border-gray-300 focus:border-blue-500", id: "message-input"
