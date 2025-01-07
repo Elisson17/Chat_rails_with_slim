@@ -6,11 +6,9 @@ class MessagesController < ApplicationController
     @message.user = current_user
 
     if @message.save
-      MessagesOfChatChannel.broadcast_to(@chat_room, message: @message)
-      # redirect_to chat_room_path(@chat_room), notice: "Mensagem enviada!"
+      MessagesOfChatChannel.broadcast_to(@chat_room.id, message: @message)
     else
       Rails.logger.info "Não foi possível enviar a mensagem."
-      # redirect_to chat_room_path(@chat_room), alert: "Não foi possível enviar a mensagem."
     end
   end
 
