@@ -1,6 +1,5 @@
 class MessagesOfChatChannel < ApplicationCable::Channel
   def subscribed
-    puts "Subscribed to #{params[:chat_room_id]}"
     stream_for params[:chat_room_id]
   end
 

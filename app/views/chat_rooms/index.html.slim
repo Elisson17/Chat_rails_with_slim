@@ -1,5 +1,5 @@
 section(class="flex w-full h-full")
-  = render "list", chats: @chat_rooms, selected_chat: @selected_chat
+  = render "list", chats: @chat_rooms, selected_chat: @selected_chat, unread: @unread
   div(class="flex-grow")
     - if @selected_chat
       div(class="bg-gray-100 p-4 border-b")
