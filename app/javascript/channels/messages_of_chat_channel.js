@@ -1,6 +1,6 @@
 import consumer from "channels/consumer";
 let subscription = null;
-
+let reconnectTimeout = null
 function createSubscription(chatRoomId, userId) {
   if (subscription) {
     subscription.unsubscribe();
@@ -10,9 +10,11 @@ function createSubscription(chatRoomId, userId) {
     {
       connected() {
         console.log(`Connected to chatRoomId: ${chatRoomId}`);
+        clearTimeout(reconnectTimeout);
       },
       disconnected() {
         console.log(`Disconnected from chatRoomId: ${chatRoomId}`);
+        attemptReconnect(chatRoomId, userId);
       },
       received(data) {
         const chatElement = document.getElementById("chat");
@@ -61,3 +63,12 @@ document.addEventListener("turbo:load", () => {
     createSubscription(newChatRoomId, userId);
   }
 });
+
+function attemptReconnect(chatRoomId, userId) {
+  console.log("Tentando reconectar...");
+  reconnectTimeout = setTimeout(() => {
+    createSubscription(chatRoomId, userId);
+  }, 5000);
+}
+
+
