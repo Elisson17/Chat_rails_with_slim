@@ -1,14 +1,11 @@
 import consumer from "channels/consumer";
 const unreadElement = document.getElementById("unread-badge");
 const userId = Number(unreadElement.dataset.userId);
-const chatRoomId = Number(unreadElement.dataset.chatRoomId);
 consumer.subscriptions.create(
   { channel: "NotificationsChannel", current_user: userId },
   {
     connected() {
       console.log("Connected to NotificationsChannel");
-      console.log(userId);
-      console.log(chatRoomId);
     },
 
     disconnected() {
@@ -17,6 +14,7 @@ consumer.subscriptions.create(
 
     received(data) {
       console.log(data);
+      // Atualizar o contador de mensagens não lidas no chat selecionado
       const unreadCountElement = document.querySelector(
         `#unread-badge[data-chat-room-id="${data.chat_room_id}"]`
       );
@@ -24,11 +22,9 @@ consumer.subscriptions.create(
         let unreadBadge = unreadCountElement.querySelector("span");
 
         if (unreadBadge) {
-          console.log(unreadBadge);
           unreadBadge.textContent = data.unread_count;
         } else {
           unreadBadge = document.createElement("span");
-          console.log(unreadBadge);
           unreadBadge.classList.add(
             "bg-blue-500",
             "text-white",
@@ -38,6 +34,19 @@ consumer.subscriptions.create(
           );
           unreadBadge.textContent = data.unread_count;
           unreadCountElement.appendChild(unreadBadge);
+        }
+      }
+
+
+      //atualiza a ultima mensagem do chat
+      const lastMessageElement = document.querySelector(
+        `#last-message[data-chat-room-id="${data.chat_room_id}"]`
+      );
+      console.log(lastMessageElement)
+      if (lastMessageElement) {
+        const lastMessage = lastMessageElement.querySelector("p");
+        if (lastMessage) {
+          lastMessage.textContent = data.message.content;
         }
       }
     },

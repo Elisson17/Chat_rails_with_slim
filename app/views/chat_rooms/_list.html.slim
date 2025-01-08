@@ -5,7 +5,7 @@ ul(class="h-full w-60 border-r bg-white overflow-y-auto")
     - last_date = nil
     = link_to chat_rooms_path(chat_room_id: chat.id), remote: true, class: "text-blue-500 " do
       button(class="flex w-full justify-between p-2 items-center hover:bg-blue-100 transition-colors #{'bg-blue-200' if selected_chat == chat}")
-        div(class="flex flex-col items-start gap-1 bottom-0 h-full")
+        div(class="flex flex-col items-start gap-1 bottom-0 h-full" id="last-message" data-chat-room-id=chat.id)
           = other_user.name
           - if last_message
             p(class="text-xs text-gray-500") = last_message.content
