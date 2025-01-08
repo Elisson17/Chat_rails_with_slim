@@ -10,7 +10,10 @@ class ChatRoomsController < ApplicationController
     else
       @chat_rooms.first
     end
-    return if @selected_chat
-    redirect_to root_path and return
+    if @selected_chat
+      @selected_chat.messages.where(read: false).where.not(user_id: current_user.id).update_all(read: true)
+    else
+      redirect_to root_path and return
+    end
   end
 end
