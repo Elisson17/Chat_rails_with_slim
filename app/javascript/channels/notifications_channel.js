@@ -6,19 +6,19 @@ consumer.subscriptions.create(
   {
     connected() {
       console.log("Connected to NotificationsChannel");
-      const buttonElement = document.getElementById("chat-button-0");
+      // const buttonElement = document.getElementById("chat-button-0");
 
-      if (buttonElement) {
-        const unreadBadgeDiv = buttonElement.querySelector("#unread-badge");
+      // if (buttonElement) {
+      //   const unreadBadgeDiv = buttonElement.querySelector("#unread-badge");
 
-        if (unreadBadgeDiv) {
-          const unreadBadgeSpan = unreadBadgeDiv.querySelector("span");
-          if (unreadBadgeSpan) {
-            unreadBadgeSpan.remove();
-            console.log("Unread badge span removed from chat-button-0.");
-          }
-        }
-      }
+      //   if (unreadBadgeDiv) {
+      //     const unreadBadgeSpan = unreadBadgeDiv.querySelector("span");
+      //     if (unreadBadgeSpan) {
+      //       unreadBadgeSpan.remove();
+      //       console.log("Unread badge span removed from chat-button-0.");
+      //     }
+      //   }
+      // }
     },
 
     disconnected() {
