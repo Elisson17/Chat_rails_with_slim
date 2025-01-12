@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChatRoomsController < ApplicationController
   def index
     @chat_rooms = current_user.chat_rooms.includes(:users, :messages).joins(:users)
@@ -6,10 +8,10 @@ class ChatRoomsController < ApplicationController
       counts[chat_room.id] = chat_room.messages.where(read: false).where.not(user_id: current_user.id).count
     end
     @selected_chat = if params[:chat_room_id].present?
-      @chat_rooms.find_by(id: params[:chat_room_id])
-    else
-      @chat_rooms.first
-    end
+                       @chat_rooms.find_by(id: params[:chat_room_id])
+                     else
+                       @chat_rooms.first
+                     end
     if @selected_chat
       @selected_chat.messages.where(read: false).where.not(user_id: current_user.id).update_all(read: true)
     else

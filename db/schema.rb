@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_04_131254) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_08_111038) do
   create_table "chat_room_users", force: :cascade do |t|
     t.integer "chat_room_id", null: false
     t.integer "user_id", null: false
@@ -28,13 +28,23 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_04_131254) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "invites", force: :cascade do |t|
+    t.integer "sender_id", null: false
+    t.integer "receiver_id", null: false
+    t.string "status", default: "pending", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receiver_id"], name: "index_invites_on_receiver_id"
+    t.index ["sender_id"], name: "index_invites_on_sender_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.integer "user_id", null: false
     t.text "content"
     t.boolean "read", default: false
-    t.integer "chat_room_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "chat_room_id", null: false
     t.index ["chat_room_id"], name: "index_messages_on_chat_room_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
@@ -50,12 +60,16 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_04_131254) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "invite_code"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["invite_code"], name: "index_users_on_invite_code", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "chat_room_users", "chat_rooms"
   add_foreign_key "chat_room_users", "users"
+  add_foreign_key "invites", "users", column: "receiver_id"
+  add_foreign_key "invites", "users", column: "sender_id"
   add_foreign_key "messages", "chat_rooms"
   add_foreign_key "messages", "users"
 end

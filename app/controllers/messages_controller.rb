@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MessagesController < ApplicationController
   before_action :set_chat_room
 
@@ -8,7 +10,7 @@ class MessagesController < ApplicationController
     if @message.save
       MessagesOfChatChannel.broadcast_to(@chat_room.id, message: @message)
     else
-      Rails.logger.info "Não foi possível enviar a mensagem."
+      Rails.logger.info 'Não foi possível enviar a mensagem.'
     end
   end
 

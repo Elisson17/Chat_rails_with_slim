@@ -1,0 +1,44 @@
+h1.text-2xl.font-bold.text-white Convites
+
+h2.text-xl.font-semibold.text-gray-200 Meu Código de Convite
+div(class="flex flex-row gap-2")
+    p.bg-gray-800.text-black.rounded-lg.font-mono.w-fit.mb-6.py-2(id="invite-code")
+        = current_user.invite_code
+    button(class=" text-black p-2 rounded-lg bg-slate-400" onClick="copyToClipboard()") 
+        i(class="fa-solid fa-copy")
+
+= form_with url: invites_path, method: :post, class: "flex flex-col gap-2" do |f|
+  = f.label :invite_code, "Insira o código único do usuário:", class: "text-black"
+  = f.text_field :invite_code, class: "p-2 rounded-lg border border-gray-500 w-1/2", placeholder: "Código de Convite"
+  = f.submit "Enviar Convite", class: "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+
+h2.text-xl.font-semibold.text-gray-200 Recebidos
+- if @received_invites.any?
+  ul
+    - @received_invites.each do |invite|
+      li(class="bg-gray-800 text-black p-4 rounded-lg mb-4 flex justify-between items-center")
+        = invite.sender.name
+        = link_to "Aceitar", accept_invite_path(invite.id), data: { turbo_method: :put }, class: "bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
+        = link_to "Recusar", decline_invite_path(invite.id), data: { turbo_method: :put }, class: "bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+- else
+  p.text-gray-400 Nenhum convite recebido.
+
+h2.text-xl.font-semibold.text-gray-200 Enviados
+- if @sent_invites.any?
+  ul
+    - @sent_invites.each do |invite|
+      li(class="bg-gray-800 text-black p-4 rounded-lg mb-4")
+        | Convite enviado para: 
+        = invite.receiver.name
+- else
+  p.text-gray-400 Você ainda não enviou convites.
+
+javascript:
+    function copyToClipboard() {
+        input = document.getElementById("invite-code").textContent;
+        navigator.clipboard.writeText(input).then(function() {
+            console.log("Copiado!");
+        }).catch(function(err) {
+            console.log("Falha ao copiar!" + err);
+        });
+    }

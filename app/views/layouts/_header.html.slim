@@ -1,7 +1,14 @@
 header
-  nav(class="flex flex-row justify-between items-center w-full h-16 bg-slate-800 shadow-right-bottom px-8")
+  nav(class="flex flex-row items-center justify-between w-full h-16 bg-slate-800 px-8")
     = link_to "Chat Application", root_path, class: "text-white font-semibold"
-    - if user_signed_in?
-        = link_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "ml-4 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition gap-2 flex items-center" do 
-          i(class="fa-solid fa-arrow-right-from-bracket ")
-          | Sair
+    div(class="flex items-center justify-end")
+      - if user_signed_in?
+          = link_to chat_rooms_path, class: "bg-blue-500 gap-2 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition flex items-center" do
+            i(class="fa-solid fa-comments")
+            | Chats
+          = link_to invites_path, class: "ml-4 bg-blue-500 gap-2 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition flex items-center" do
+            i(class="fa-solid fa-envelope")
+            | Convites
+          = link_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "ml-4 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition gap-2 flex items-center" do 
+            i(class="fa-solid fa-arrow-right-from-bracket ")
+            | Sair

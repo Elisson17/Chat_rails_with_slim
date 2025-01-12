@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MessagesOfChatChannel < ApplicationCable::Channel
   def subscribed
     stream_for params[:chat_room_id]
