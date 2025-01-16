@@ -1,6 +1,7 @@
 section(class="w-screen h-screen flex flex-col justify-center items-center bg-gradient-to-tr from-purple-700 to-indigo-500 backdrop-blur-md")
   div(class="border-[1px] border-transparent rounded-lg flex flex-col justify-center items-center p-12 bg-slate-800 shadow-right-bottom w-full max-w-xl")
     h2(class="text-white text-3xl font-semibold font-sans pb-4") Bem-vindo de volta!
+    h4(class="text-white text-sm font-semibold font-sans pb-4") Esse é uma aplicação de troca de mensagens feito em Ruby on Rails.
     - if flash[:alert]
       .text-red-500.text-sm.font-semibold.p-2
         = flash[:alert]
@@ -14,5 +15,10 @@ section(class="w-screen h-screen flex flex-col justify-center items-center bg-gr
           = f.check_box :remember_me
           label(class="text-sm text-white") Lembrar de mim
         = f.submit "Entrar", class: "rounded-md bg-blue-500 px-4 py-2 text-white font-semibold hover:cursor-pointer hover:bg-blue-600"
+    
+    p(class="text-white text-sm font-semibold font-sans p-4") Feito por Elisson Silva - 2024
+    a(href="https://github.com/Elisson17", class="text-white text-sm font-semibold font-sans")
+      i(class="fab fa-github")
+      |  Github
     / Já mexo com isso
     / = render "devise/shared/links"
